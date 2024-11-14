@@ -36,6 +36,13 @@ const RootLayout = async ({
   const sessions = await auth();
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+        />
+      </head>
       <SessionProvider session={sessions}>
         <body
           className={` ${inter.className} ${spaceGrotesk.variable}  antialiased`}
