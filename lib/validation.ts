@@ -32,3 +32,16 @@ export const SignUpSchema = z.object({
     })
     .regex(/[0-9]/, { message: "Password must contain at least one number." }),
 });
+
+export const AskQuestionSchema = z.object({
+  title: z.string().min(1, { message: "Title is required." }),
+  content: z.string().min(1, { message: "Content is required." }),
+  tags: z
+    .array(
+      z
+        .string()
+        .min(1, { message: "Tag is required." })
+        .max(20, { message: "Tag must be at most 20 characters." })
+    )
+    .max(3, { message: "You can add at most 3 tags." }),
+});

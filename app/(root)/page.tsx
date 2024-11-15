@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/route";
 import Link from "next/link";
 import LocalSearch from "@/components/search/LocalSearch";
+import HomeFilter from "@/components/filters/HomeFilter";
+import QuestionCard from "@/components/cards/QuestionCard";
 
 const questions = [
   {
@@ -18,11 +20,13 @@ const questions = [
     author: {
       _id: "1",
       name: "John Doe",
+      image:
+        "https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D",
     },
     upvotes: 10,
     answers: 5,
     views: 100,
-    createdAt: new Date(),
+    createdAt: new Date("2021-09-01"),
   },
   {
     _id: "2",
@@ -36,21 +40,31 @@ const questions = [
     author: {
       _id: "2",
       name: "Jane Doe",
+      image:
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D",
     },
     upvotes: 15,
     answers: 10,
     views: 200,
-    createdAt: new Date(),
+    createdAt: new Date("2021-09-02"),
   },
 ];
 interface SearchParams {
   searchParams: Promise<{ [key: string]: string }>;
 }
 const Home = async ({ searchParams }: SearchParams) => {
-  const { query = "" } = await searchParams;
-  const filterdQuestions = questions.filter((question) =>
-    question.title.toLowerCase().includes(query?.toLowerCase())
-  );
+  const { query = "", filter = "" } = await searchParams;
+  const filteredQuestions = questions.filter((question) => {
+    const matchesQuery = question.title
+      .toLowerCase()
+      .includes(query?.toLowerCase());
+    const matchesFilter = filter
+      ? question.tags.some(
+          (tag) => tag.name.toLowerCase() === filter.toLowerCase()
+        )
+      : true;
+    return matchesQuery && matchesFilter;
+  });
   return (
     <>
       <section className="w-full flex flex-col-reverse sm:flex-row justify-between gap-4 sm:items-center">
@@ -72,10 +86,10 @@ const Home = async ({ searchParams }: SearchParams) => {
           otherClasses="flex-1"
         />
       </section>
-      HomeFilter
+      <HomeFilter />
       <div className="mt-10 flex w-full flex-col gap-6">
-        {filterdQuestions.map((question) => (
-          <h1 key={question._id}>{question.title}</h1>
+        {filteredQuestions.map((question) => (
+          <QuestionCard key={question._id} question={question} />
         ))}
       </div>
     </>
