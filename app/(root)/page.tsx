@@ -49,7 +49,6 @@ const questions = [
     createdAt: new Date("2021-09-02"),
   },
 ];
-
 interface SearchParams {
   searchParams: Promise<{ [key: string]: string }>;
 }
