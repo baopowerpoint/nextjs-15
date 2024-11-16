@@ -1,11 +1,11 @@
+import Link from "next/link";
 import React from "react";
 
+import QuestionCard from "@/components/cards/QuestionCard";
+import HomeFilter from "@/components/filters/HomeFilter";
+import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/route";
-import Link from "next/link";
-import LocalSearch from "@/components/search/LocalSearch";
-import HomeFilter from "@/components/filters/HomeFilter";
-import QuestionCard from "@/components/cards/QuestionCard";
 
 const questions = [
   {
@@ -49,6 +49,7 @@ const questions = [
     createdAt: new Date("2021-09-02"),
   },
 ];
+
 interface SearchParams {
   searchParams: Promise<{ [key: string]: string }>;
 }
@@ -67,7 +68,7 @@ const Home = async ({ searchParams }: SearchParams) => {
   });
   return (
     <>
-      <section className="w-full flex flex-col-reverse sm:flex-row justify-between gap-4 sm:items-center">
+      <section className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
         <h1 className="h1-bold text-dark100_light900">
           Welcome to the world of Next.js 🚀
         </h1>
